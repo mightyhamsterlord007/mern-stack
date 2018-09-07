@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Form from './Form';
 
 class App extends Component {
 
@@ -7,33 +8,30 @@ class App extends Component {
         super();
 
         this.state = {
-            email: '',
-            password: ''
+            userEmail: null
         }
-
-
     }
 
-    handleInput (event) {
-        console.log('TYPED!')
-
-        console.log(this.state)
+    handleIncomingData = (event) => {
+        this.setState({
+            userEmail: event.data.data.email
+        })
     }
 
     render(){
+
+        const user = this.state.userEmail;
+
+        let userEmail;
+        if (user !== null) {
+            userEmail = this.state.userEmail
+        } else {
+            userEmail = <Form handleIncomingData={this.handleIncomingData}/>
+        }
+
         return(
-            <div>
-                <span>Sign up</span>
-                <form>
-                    <label>email</label>
-                    <br />
-                    <input name="email" onChange={this.handleInput} />
-                    <br />
-                    <label>password</label>
-                    <br />
-                    <input password="password" onChange={this.handleInput} />
-                    <button>Submit</button>
-                </form>
+            <div>    
+                {userEmail}
             </div>
         )
     }
